@@ -57,6 +57,24 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define THERM_REF_Pin GPIO_PIN_0
+#define THERM_REF_GPIO_Port GPIOA
+#define THERM_OUT_Pin GPIO_PIN_1
+#define THERM_OUT_GPIO_Port GPIOA
+#define THERM_OFST_Pin GPIO_PIN_2
+#define THERM_OFST_GPIO_Port GPIOA
+#define FLASH_nCS_Pin GPIO_PIN_4
+#define FLASH_nCS_GPIO_Port GPIOA
+#define FLASH_SCK_Pin GPIO_PIN_5
+#define FLASH_SCK_GPIO_Port GPIOA
+#define FLASH_MISO_Pin GPIO_PIN_6
+#define FLASH_MISO_GPIO_Port GPIOA
+#define FLASH_MOSI_Pin GPIO_PIN_7
+#define FLASH_MOSI_GPIO_Port GPIOA
+#define FLASH_nWP_Pin GPIO_PIN_0
+#define FLASH_nWP_GPIO_Port GPIOB
+#define TEMP_EN_Pin GPIO_PIN_1
+#define TEMP_EN_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 
