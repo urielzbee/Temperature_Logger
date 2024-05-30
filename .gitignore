@@ -1,1 +1,3 @@
-/FM/TL_MAIN_MCU/build
+/FW/TL_MAIN_MCU/build
+/FW/tests/bin
+/FW/tests/obj
