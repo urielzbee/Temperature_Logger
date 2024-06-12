@@ -16,7 +16,6 @@ CXXFLAGS =
 
 CPPFLAGS =
 CPPFLAGS += -I$(CPPUTEST_HOME)/include
-CPPFLAGS += -I ./src
 
 LDLIBS = -L$(CPPUTEST_HOME)/cpputest_build/lib -lCppUTest -lCppUTestExt
 
@@ -27,30 +26,30 @@ LDLIBS = -L$(CPPUTEST_HOME)/cpputest_build/lib -lCppUTest -lCppUTestExt
 BIN = bin
 OBJ = obj
 SRC = ../TL_MAIN_MCU/App
-TST = ./
+TST = .
 
+# C Source files
+C_SRC = \
+$(SRC)/thermistor.c 
 
-SOURCES := \
-		$(wildcard $(SRC)/*.c $(SRC)/*.cpp) \
-		$(wildcard $(TST)/*.c $(TST)/*.cpp) 
+# CPP Source files
+CPP_SRC = \
+$(TST)/AllTests.cpp \
+$(TST)/ThermistorTest.cpp \
 
-OBJECTS := \
-	$(patsubst $(SRC)/%.c, $(OBJ)/%.o, $(wildcard $(SRC)/*.c)) \
-	$(patsubst $(SRC)/%.cpp, $(OBJ)/%.o, $(wildcard $(SRC)/*.cpp)) \
-	$(patsubst $(TST)/%.cpp, $(OBJ)/%.o, $(wildcard $(TST)/*.cpp)) 
+# List of objects
+C_OBJ = $(C_SRC:.c=.o)
+CPP_OBJ = $(CPP_SRC:.cpp=.o)
 
-
-# include compiler-generated dependency rules
-DEPENDS := $(OBJECTS:.o=.d)
 
 # compile C source
-COMPILE.c = $(CC) $(DEPFLAGS) $(CFLAGS) -c -o $@
+COMPILE.c = $(CC) $(DEPFLAGS) $(CFLAGS) -c $< -o $@
 
 # compile C++ source
-COMPILE.cxx = $(CXX) $(DEPFLAGS) $(CXXFLAGS) $(CPPFLAGS) -c -o $@
+COMPILE.cxx = $(CXX) $(DEPFLAGS) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
 
 # link objects
-LINK.o = $(LD) $(LDFLAGS) $(LDLIBS) $(OBJECTS) -o $@
+LINK.o = $(LD) $(LDFLAGS) $(LDLIBS) $(C_OBJ) $(CPP_OBJ) -o $@
 
 .DEFAULT_GOAL = all
 
@@ -58,26 +57,16 @@ LINK.o = $(LD) $(LDFLAGS) $(LDLIBS) $(OBJECTS) -o $@
 all: $(BIN)/$(EXE)
 	./$(BIN)/$(EXE)
 
-$(BIN)/$(EXE): $(SRC) $(OBJ) $(BIN) $(OBJECTS)
+$(BIN)/$(EXE): $(C_OBJ) $(CPP_OBJ)
 	$(LINK.o)
+	$(RM) $(C_OBJ)
+	$(RM) $(CPP_OBJ)
 
-$(SRC):
-	mkdir -p $(SRC)
+.c.o: 
+	$(COMPILE.c)
 
-$(OBJ):
-	mkdir -p $(OBJ)
-
-$(BIN):
-	mkdir -p $(BIN)
-
-$(OBJ)/%.o:	$(SRC)/%.c
-	$(COMPILE.c) $<
-
-$(OBJ)/%.o:	$(SRC)/%.cpp
-	$(COMPILE.cxx) $<
-
-$(OBJ)/%.o:	$(TST)/%.cpp
-	$(COMPILE.cxx) $<
+.cpp.o: 
+	$(COMPILE.cxx) 
 
 # force rebuild
 .PHONY: remake
@@ -91,6 +80,7 @@ run: $(BIN)/$(EXE)
 # remove previous build and objects
 .PHONY: clean
 clean:
-	$(RM) $(OBJECTS)
+	$(RM) $(C_OBJ)
+	$(RM) $(CPP_OBJ)
 	$(RM) $(DEPENDS)
 	$(RM) $(BIN)/$(EXE)
