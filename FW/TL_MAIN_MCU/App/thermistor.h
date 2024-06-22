@@ -1,7 +1,9 @@
 #ifndef THERMISTOR
 #define THERMISTOR
 
-void Thermistor_Init(void);
+#include "stm32f0xx_hal_adc.h"
+
+void Thermistor_Init(ADC_HandleTypeDef * adc_handle);
 void Thermistor_DeInit(void);
 
 #endif
