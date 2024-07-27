@@ -1,7 +1,6 @@
 FW/TL_MAIN_MCU/build/*
-/FW/tests/bin
-/FW/tests/obj
+FW/test/build/*
 
-/HW/TEMP_LOGGER/TEMP_LOGGER-backups/*
+HW/TEMP_LOGGER/TEMP_LOGGER-backups/*
 
 **/.DS_Store
