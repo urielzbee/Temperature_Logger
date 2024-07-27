@@ -3,3 +3,5 @@ FW/TL_MAIN_MCU/build/*
 /FW/tests/obj
 
 /FW/TEMP_LOGGER/TEMP_LOGGER-backups/*
+
+**/.DS_Store
