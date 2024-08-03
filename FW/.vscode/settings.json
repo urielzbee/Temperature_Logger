@@ -7,6 +7,9 @@
         "stddef.h": "c",
         "stm32_hal_legacy.h": "c",
         "stm32f0xx.h": "c",
-        "adc.h": "c"
-    }
+        "adc.h": "c",
+        "main.h": "c"
+    },
+    "cmake.configureOnOpen": false,
+    "cortex-debug.variableUseNaturalFormat": true
 }
